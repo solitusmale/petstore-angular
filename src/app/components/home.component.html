@@ -1,5 +1,31 @@
-<!-- Pretraga ljubimaca -->
-<div class="search-form">
+<!-- LOGIN / REGISTRACIJA -->
+<div *ngIf="!currentUser" class="auth-container">
+  <h2>Prijava</h2>
+  <input placeholder="Korisničko ime" [(ngModel)]="loginUsername">
+  <input type="password" placeholder="Lozinka" [(ngModel)]="loginPassword">
+  <button (click)="login(loginUsername, loginPassword)">Prijavi se</button>
+
+  <h2>Registracija</h2>
+  <input placeholder="Ime" [(ngModel)]="registerData.firstName">
+  <input placeholder="Prezime" [(ngModel)]="registerData.lastName">
+  <input placeholder="Email" [(ngModel)]="registerData.email">
+  <input placeholder="Telefon" [(ngModel)]="registerData.phone">
+  <input placeholder="Adresa" [(ngModel)]="registerData.address">
+  <input placeholder="Korisničko ime" [(ngModel)]="registerData.username">
+  <input type="password" placeholder="Lozinka" [(ngModel)]="registerData.password">
+  <button (click)="registerUser(registerData)">Registruj se</button>
+</div>
+
+<!-- PROFIL KORISNIKA -->
+<div *ngIf="currentUser" class="profile-container">
+  <h3>Dobrodošli, {{currentUser.firstName}} {{currentUser.lastName}}</h3>
+  <p>Email: {{currentUser.email}} | Telefon: {{currentUser.phone}} | Adresa: {{currentUser.address}}</p>
+  <p>Omiljene vrste: {{currentUser.favoriteSpecies.join(', ')}}</p>
+  <button (click)="logout()">Odjavi se</button>
+</div>
+
+<!-- PRETRAGA LJUBIMACA -->
+<div *ngIf="currentUser" class="search-form">
   <input placeholder="Naziv" [(ngModel)]="criteria.name">
   <select [(ngModel)]="criteria.species">
     <option value="">Svi</option>
@@ -12,8 +38,7 @@
   <button (click)="resetFilter()">Resetuj filter</button>
 </div>
 
-
-<!-- Lista ljubimaca -->
+<!-- Lista ljubimaca sa zvezdicama -->
 <div class="pets-list">
   <div *ngFor="let pet of filteredPets" class="card">
     <h3>{{pet.name}} ({{pet.species}})</h3>
@@ -21,13 +46,13 @@
     <p>Starost: {{pet.age}} god | Veličina: {{pet.size}} | Poreklo: {{pet.origin}}</p>
     <p>Cena: {{pet.price}}€</p>
 
-    <!-- Interaktivne zvezdice -->
-    <div class="rating">
-      <span *ngFor="let star of [1,2,3,4,5]" (click)="ratePet(pet, star)" [class.filled]="star <= (pet.rating ?? 0)"
-        style="cursor:pointer">
+    <!-- Ocenjivanje u zvezdica -->
+    <div class="rating" *ngIf="pet.rating !== undefined || currentUser">
+      <span *ngFor="let star of [1,2,3,4,5]" 
+            (click)="rateItem(pet, star)" 
+            [class.filled]="star <= (pet.rating ?? 0)">
         ★
       </span>
-      <span *ngIf="!pet.rating">N/A</span>
     </div>
 
     <button (click)="orderPet(pet)">Rezerviši</button>
@@ -35,34 +60,22 @@
 </div>
 
 
-
-<!-- Korpa -->
-<div class="cart" *ngIf="cart.length > 0">
+<!-- KORPA -->
+<div *ngIf="currentUser && cart.length > 0" class="cart">
   <h2>Korpa</h2>
   <div *ngFor="let item of cart" class="cart-item">
     <div class="cart-item-info">
       <strong>{{item.name}} ({{item.species}})</strong>
       <p>{{item.description}}</p>
-      <p>
-        Starost: {{item.age}} god |
-        Veličina: {{item.size}} |
-        Poreklo: {{item.origin}}
-
-      </p>
-      <!-- Ocenjivanje u zvezdice unutar korpe -->
-      <div class="rating" *ngIf="item.status === 'preuzeto'">
-        <span *ngFor="let star of [1,2,3,4,5]" (click)="rateItem(item, star)"
-          [class.filled]="star <= (item.rating ?? 0)" style="cursor:pointer">
-          ★
-        </span>
-        <span *ngIf="!item.rating">N/A</span>
-      </div>
-
+      <p>Starost: {{item.age}} god | Veličina: {{item.size}} | Poreklo: {{item.origin}}</p>
       <p>Cena: {{item.price}}€ | Status: {{item.status}}</p>
 
-      
-
-
+      <!-- Zvezdice u korpi -->
+      <div class="rating" *ngIf="item.status==='preuzeto'">
+        <span *ngFor="let star of [1,2,3,4,5]"
+              (click)="rateItem(item, star)"
+              [class.filled]="star <= (item.rating ?? 0)">★</span>
+      </div>
     </div>
 
     <!-- Akcije u korpi -->
