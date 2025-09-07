@@ -1,0 +1,77 @@
+<!-- Pretraga ljubimaca -->
+<div class="search-form">
+  <input placeholder="Naziv" [(ngModel)]="criteria.name">
+  <select [(ngModel)]="criteria.species">
+    <option value="">Svi</option>
+    <option value="dog">Pas</option>
+    <option value="cat">Maca</option>
+    <option value="bird">Ptica</option>
+    <option value="fish">Ribica</option>
+  </select>
+  <input type="number" placeholder="Max cena" [(ngModel)]="criteria.price">
+  <button (click)="resetFilter()">Resetuj filter</button>
+</div>
+
+
+<!-- Lista ljubimaca -->
+<div class="pets-list">
+  <div *ngFor="let pet of filteredPets" class="card">
+    <h3>{{pet.name}} ({{pet.species}})</h3>
+    <p>{{pet.description}}</p>
+    <p>Starost: {{pet.age}} god | Veličina: {{pet.size}} | Poreklo: {{pet.origin}}</p>
+    <p>Cena: {{pet.price}}€</p>
+
+    <!-- Interaktivne zvezdice -->
+    <div class="rating">
+      <span *ngFor="let star of [1,2,3,4,5]" (click)="ratePet(pet, star)" [class.filled]="star <= (pet.rating ?? 0)"
+        style="cursor:pointer">
+        ★
+      </span>
+      <span *ngIf="!pet.rating">N/A</span>
+    </div>
+
+    <button (click)="orderPet(pet)">Rezerviši</button>
+  </div>
+</div>
+
+
+
+<!-- Korpa -->
+<div class="cart" *ngIf="cart.length > 0">
+  <h2>Korpa</h2>
+  <div *ngFor="let item of cart" class="cart-item">
+    <div class="cart-item-info">
+      <strong>{{item.name}} ({{item.species}})</strong>
+      <p>{{item.description}}</p>
+      <p>
+        Starost: {{item.age}} god |
+        Veličina: {{item.size}} |
+        Poreklo: {{item.origin}}
+
+      </p>
+      <!-- Ocenjivanje u zvezdice unutar korpe -->
+      <div class="rating" *ngIf="item.status === 'preuzeto'">
+        <span *ngFor="let star of [1,2,3,4,5]" (click)="rateItem(item, star)"
+          [class.filled]="star <= (item.rating ?? 0)" style="cursor:pointer">
+          ★
+        </span>
+        <span *ngIf="!item.rating">N/A</span>
+      </div>
+
+      <p>Cena: {{item.price}}€ | Status: {{item.status}}</p>
+
+      
+
+
+    </div>
+
+    <!-- Akcije u korpi -->
+    <div class="cart-item-actions">
+      <button *ngIf="item.status==='preuzeto'" (click)="removeFromCart(item)">X</button>
+      <button *ngIf="item.status==='otkazano' || item.status==='u toku'" (click)="editOrder(item)">Izmeni</button>
+    </div>
+  </div>
+
+  <div class="cart-total">Ukupno: {{totalPrice}}€</div>
+  <button class="checkout-btn">Završi kupovinu</button>
+</div>

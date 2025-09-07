@@ -1,0 +1,228 @@
+/* Forma za pretragu ljubimaca */
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+  justify-content: center;
+}
+
+.search-form input,
+.search-form select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  font-size: 1rem;
+}
+
+.search-form input::placeholder,
+.search-form select {
+  color: #bdc3c7;
+}
+
+.search-form button {
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.search-form button:hover {
+  background-color: #2980b9;
+}
+
+/* Lista ljubimaca */
+.pets-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+/* Kartice ljubimaca */
+.card {
+  background-color: #34495e;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.5);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  color: #ecf0f1;
+  text-align: center;
+}
+
+.card .description {
+  font-size: 1rem;
+  color: #bdc3c7;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.card .details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.95rem;
+  color: #ecf0f1;
+  margin-bottom: 10px;
+}
+
+.card .price-rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: #ecf0f1;
+  margin-bottom: 10px;
+}
+
+.card button {
+  width: 100%;
+  padding: 8px 0;
+  background-color: #2ecc71;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.card button:hover {
+  background-color: #27ae60;
+}
+
+/* Pozadina aplikacije */
+:host {
+  display: block;
+  background-color: #1c1c1c;
+  min-height: 100vh;
+  padding: 20px;
+  color: #ecf0f1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Korpa */
+.cart {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background-color: #1c1c1c;
+  color: #eee;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  padding: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 1000;
+}
+
+/* Naslov korpe */
+.cart h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  color: #f1c40f;
+  text-align: center;
+}
+
+/* Lista stavki u korpi */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #444;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+/* Naziv i cena stavke */
+.cart-item span {
+  font-size: 0.95rem;
+  color: #ecf0f1;
+}
+
+/* Dugme za uklanjanje stavke */
+.cart-item button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s;
+}
+
+.cart-item button:hover {
+  background-color: #c0392b;
+}
+
+/* Ukupna cena */
+.cart-total {
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: right;
+  color: #f1c40f;
+}
+
+/* Dugme za završetak kupovine */
+.checkout-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  background-color: #2ecc71;
+  color: #1c1c1c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.checkout-btn:hover {
+  background-color: #27ae60;
+}
+.rating {
+  font-size: 1.2rem;
+  color: #777;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.rating span {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: gray;
+  
+}
+
+.rating span.filled {
+  color: gold;
+}
+.rating span:hover {
+  color: orange; /* efekat kada prelaziš mišem */
+}
